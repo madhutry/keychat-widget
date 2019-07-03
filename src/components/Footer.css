@@ -1,0 +1,28 @@
+.floating-chat .chat .footer {
+  flex-shrink: 0;
+  display: flex;
+  padding-top: 10px;
+  max-height: 90px;
+  background: transparent;
+}
+.floating-chat .chat .footer .text-box {
+  border-radius: 3px;
+  background: rgba(25, 147, 147, 0.2);
+  min-height: 100%;
+  width: 100%;
+  margin-right: 5px;
+  color: #0EC879;
+  overflow-y: auto;
+  padding: 2px 5px;
+}
+.floating-chat .chat .footer .text-box::-webkit-scrollbar {
+  width: 5px;
+}
+.floating-chat .chat .footer .text-box::-webkit-scrollbar-track {
+  border-radius: 5px;
+  background-color: rgba(25, 147, 147, 0.1);
+}
+.floating-chat .chat .footer .text-box::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: rgba(25, 147, 147, 0.2);
+}

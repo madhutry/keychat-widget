@@ -1,0 +1,90 @@
+.floating-chat .chatform {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  border-radius: 50%;
+  transition: all 250ms ease-out;
+  margin: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.floating-chat .chatform.enter {
+  opacity: 1;
+  width: auto;
+  height: auto;
+  border-radius: 50%;
+
+}
+.floating-chat .chatform .header {
+  flex-shrink: 0;
+  height: 10%;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  background:lightslategray;
+}
+.floating-chat .chatform .header .title {
+  flex-grow: 1;
+  padding: 30px 20px 
+}
+
+.floating-chat .chatform .header button {
+  flex-grow: 0;
+}
+
+.floating-chat .chatform .inputform {
+  padding: 10px;
+  padding-top:30px;
+  margin: 0;
+  flex-grow: 1;
+  border-radius: 4px;
+  background: transparent;
+}
+.floating-chat .chatform .inputform .inputheader {
+  font: 18px/16px 'Noto Sans', sans-serif;
+}
+.floating-chat .chatform .inputform .inputs{
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  margin-top: 30px; 
+}
+
+.floating-chat .chatform .inputform label {
+  margin-top:10px;
+}
+.floating-chat .chatform .inputform input {
+  border-radius: 3px;
+  flex-grow: 1;
+  background: rgba(25, 147, 147, 0.2);
+  color: #0EC879;
+  overflow-y: auto;
+  width:100%;
+  padding-left: 15px;
+  font-size:12px;
+  margin-top: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+  width: 200px;
+
+}
+
+.floating-chat .chatform .inputform button {
+
+  height: 10%;
+  align-items: center;
+  justify-content: center;
+  margin-top: 40px ;
+  background: green;
+  padding: 10px;
+}
+.floating-chat .chatform .inputform div#busy {
+  align-items: center;
+  justify-content: center;
+  margin-left: 30px;
+}

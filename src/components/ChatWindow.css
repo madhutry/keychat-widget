@@ -1,0 +1,37 @@
+.chat {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  border-radius: 50%;
+  transition: all 250ms ease-out;
+  margin: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.chat.enter {
+  opacity: 1;
+  margin: 10px;
+  width: auto;
+  height: auto;
+}
+.floating-chat .chat .header {
+  flex-shrink: 0;
+  border-radius: 10px;
+
+  padding-left: 10px;
+  display: flex;
+  background: green;
+}
+.floating-chat .chat .header .title {
+  flex-grow: 1;
+  flex-shrink: 1;
+  padding: 0 5px;
+}
+.floating-chat .chat .header button {
+  flex-shrink: 0;
+}
