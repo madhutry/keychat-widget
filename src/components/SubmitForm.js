@@ -19,7 +19,6 @@ export default class SubmitForm extends React.Component {
     this.props.hideSubmitForm()
   }
   openChat() {
-    debugger
     console.log('opemnChat')
     console.log(this.state.fullname)
     console.log(this.state.mobileno)

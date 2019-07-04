@@ -144,7 +144,6 @@ export default class ChatWindow extends React.Component {
     return date.getDate() +'/'+date.getMonth()  + " " + strTime;
   }
   render() {
-    debugger
     return (
       <div className="chat enter">
         <div className="header">
