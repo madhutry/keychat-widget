@@ -13,6 +13,9 @@ export default class Footer extends React.Component {
   }
   sendMessage() {
     this.props.sendMessage(this.state.message)
+    this.setState({
+      message:''
+    })
   }
   render(){
     return(

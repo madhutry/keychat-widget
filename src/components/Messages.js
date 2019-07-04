@@ -4,18 +4,19 @@ export default class Messages extends React.Component {
   constructor(props) {
     super(props)    
   }
+  componentDidUpdate() {
+    this.scrollToBottom();
+  }
+  scrollToBottom = () => {
+    if (this.refs.chatoutput != null) {
+      this.refs.chatoutput.scrollTop = this.refs.chatoutput.scrollHeight;
+    }  
+  } 
   render(){
     return(
-      <ul class="messages">
-            <li class="other">asdasdasasdasdasasdasdasasdasdasasdasdasasdasdasasdasdas</li>
-            <li class="other">Are we dogs???</li>
-            <li class="self">no... we're human</li>
-            <li class="other">are you sure???</li>
-            <li class="self">yes.... -___-</li>
-            <li class="other">if we're not dogs.... we might be monkeys</li>
-            <li class="self">i hate you</li>
-            <li class="other">don't be so negative! here's a banana</li>
-            <li class="self">......... -___-</li>
+      <ul class="messages" ref='chatoutput'>
+            <ListMessages offlinemesg={this.props.offlinemesg} messages={this.props.messages} userId={this.props.userId}/>
+            <ListMessages messages={this.props.typesMessages} userId={this.props.userId}/>
       </ul>
     )
   }
@@ -34,6 +35,7 @@ export class ListMessages extends React.Component {
   }
   showImageDetailsFunc(url) {
     this.setState({showDetails:true,urlLoc:url})
+    window.parent.postMessage(JSON.stringify({showDetails:true,urlLoc:url}),"http://localhost:8011");
   }
   closeImageDetailsFunc() {
     this.setState({showDetails:false})
@@ -55,20 +57,8 @@ export class ListMessages extends React.Component {
     var self=this
     const list = this.props.messages ? this.props.messages.map((messages,indx) => (
       this.props.userId===messages[2] ?
-      <li>
-        <div class="message-data">
-          <span class="message-data-name"><i class="fa fa-circle online"></i> Me</span>
-          <span class="message-data-time">{self.formatDate(messages[1])}</span>
-        </div>
-        <div class="message my-message">
-        {messages[0]}
-        </div>
-      </li> :
-      <li className="clearfix">
-        <div className="message-data align-right">
-          <span className="message-data-time">{self.formatDate(messages[1])}</span> &nbsp; &nbsp;
-          <span className="message-data-name">{messages[2]}</span> <i className="fa fa-circle me"></i>
-        </div>
+      <li className="self">{messages[0]}</li>
+      :<li className="other" style={messages[4]==='m.text'?{}:{'background-color': 'transparent'}}>
         {messages[4]=='m.image' && 
           <img src={messages[5]} className="responsiveChatImg" onClick={() => this.showImageDetailsFunc(messages[5])} />
         }
@@ -78,25 +68,17 @@ export class ListMessages extends React.Component {
         </div>
         }
         {messages[4]=='m.file' && 
-        <div className="message other-message float-right" style={{'max-width':'500px'}}>
+        <div className="message other-message float-right" style={{'font-size': '20px','color': 'white'}}>
           <a href={messages[5]} ><i class="fa fa-download" aria-hidden="true"></i>{messages[0]}</a>
         </div>
         }
-      </li>
+       </li>
      )):<li className="clearfix">
-          <div className="message-data align-right">
-            <span className="message-data-time">10:10 AM, Today</span> &nbsp; &nbsp;
-            <span className="message-data-name">Olia</span> <i className="fa fa-circle me"></i>
-          </div>
-          <div className="message other-message float-right">
             Loading..
-          </div>
         </li>
+    const newlist = this.props.offlinemesg? [list,<li className="other">I am Offline. Drop me a message.</li>]:[list]
     return (
-      <div> 
-        { self.state.showDetails && <ShowImageDetails closeModal={this.closeImageDetailsFunc} url={this.state.urlLoc} />}
-        { !self.state.showDetails && list}
-      </div>
+        [newlist]
       )
 
   }

@@ -10,6 +10,8 @@ export default class ChatWindow extends React.Component {
 
     this.sendMessage = this.sendMessage.bind(this)  
     this.checkAgentOnline = this.checkAgentOnline.bind(this)
+    this.pingMessage = this.pingMessage.bind(this)  
+
     const avatarUrl = JSON.parse(localStorage.getItem('registrationInfo')).avatarUrl
     const welcomeMsg = JSON.parse(localStorage.getItem('registrationInfo')).WelcomeMessage
   }
@@ -95,10 +97,10 @@ export default class ChatWindow extends React.Component {
     
   }
   sendMessage(mesg) {
-    debugger
     const token = JSON.parse(localStorage.getItem('registrationInfo')).token
     var uuid = this.simpleUniqueId('mesg')
     this.state.typesMessages.push([mesg,'now',this.state.userId,uuid])
+    this.setState({typesMessages:this.state.typesMessages})
     var msg = JSON.stringify({'mesgType':'sendmesg','message':mesg,'token':token,'uuid':uuid})
     this.ws.send(msg)
   }
@@ -107,7 +109,12 @@ export default class ChatWindow extends React.Component {
     var msg = JSON.stringify({'mesgType':'checkagentonline','token':token})
     this.ws.send(msg)
   }
-
+  pingMessage() {
+    const token = JSON.parse(localStorage.getItem('registrationInfo')).token
+    var uuid = this.simpleUniqueId('mesg')
+    var msg = JSON.stringify({'mesgType':'ping','token':token,'lastSerialNo':this.state.sinceMesgNo})
+    this.ws.send(msg)
+  }
   gen4() {
     return Math.random().toString(16).slice(-4)
   }
@@ -137,15 +144,20 @@ export default class ChatWindow extends React.Component {
     return date.getDate() +'/'+date.getMonth()  + " " + strTime;
   }
   render() {
+    debugger
     return (
       <div className="chat enter">
         <div className="header">
-          <span className="title">
-              You are connected to Elina from Panvel Realtors
-          </span>
+          {this.state.agentOnline==='online' && <span className="title">
+              Connected to {this.state.welcomeMsg}</span>
+          }
+          {this.state.agentOnline==='offline' &&
+            <span className="title">{this.state.welcomeMsg}-is offline
+            </span>
+          }
           <button onClick={this.hideChatWindow} ><i className="fa fa-times"></i></button>
         </div>
-        <Messages />
+        <Messages offlinemesg={this.state.agentOnline==='offline'} messages={this.state.messages} typesMessages={this.state.typesMessages} userId={this.state.userId}/>
         <Footer sendMessage={this.sendMessage}/>
       </div>
     )
