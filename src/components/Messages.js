@@ -35,7 +35,7 @@ export class ListMessages extends React.Component {
   }
   showImageDetailsFunc(url) {
     this.setState({showDetails:true,urlLoc:url})
-    window.parent.postMessage(JSON.stringify({showDetails:true,urlLoc:url}),"http://localhost:8011");
+    window.parent.postMessage(JSON.stringify({showDetails:true,urlLoc:url}),"*");
   }
   closeImageDetailsFunc() {
     this.setState({showDetails:false})

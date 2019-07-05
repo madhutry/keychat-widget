@@ -15,6 +15,18 @@ export default class SubmitForm extends React.Component {
       submitting:false
     }
   }
+  componentDidMount(){
+    var self = this
+    axios.post('/chat/token',{})
+    .then(function (response) {
+      self.setState({
+        token:response.data.token
+      })
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
   hideSubmitForm() {
     this.props.hideSubmitForm()
   }
@@ -22,9 +34,8 @@ export default class SubmitForm extends React.Component {
     console.log('opemnChat')
     console.log(this.state.fullname)
     console.log(this.state.mobileno)
-    var token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJEb21haW5OYW1lIjoid2UzLmZyaWV6ZS5pbiIsImlhdCI6MTU2MTkzMjk1Mn0.Glhx3hJyElR0KCFGMvfIYHJGx0E_yAkjelH1vUQVgbI";
     this.setState({submitting:true})
-    const req = {'token':token,'fullname':this.state.fullname,'mobileno':this.state.mobileno,'extrainfo':{something:'hi'}}
+    const req = {'token':this.state.token,'fullname':this.state.fullname,'mobileno':this.state.mobileno,'extrainfo':{something:'hi'}}
     var self=this
 		axios.post('/chat/submitchat',req)
     .then(function (response) {
