@@ -69,7 +69,7 @@ export class ListMessages extends React.Component {
         }
         {messages[4]=='m.file' && 
         <div className="message other-message float-right" style={{'font-size': '20px','color': 'white'}}>
-          <a href={messages[5]} ><i class="fa fa-download" aria-hidden="true"></i>{messages[0]}</a>
+          <a href={messages[5]} ><i class="fa fa-download" aria-hidden="true"></i><span style={{'color': '#0ec879','font-size': '15px'}}>{messages[0]}</span></a>
         </div>
         }
        </li>

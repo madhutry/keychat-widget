@@ -89,3 +89,21 @@
   border-radius: 5%;
 
 }
+
+.other-message a:link    {
+  /* Applies to unvisited links in class mainNav */
+  text-decoration:  none;
+  } 
+.other-message a:visited {
+  /* Applies to visited links in class mainNav */
+  text-decoration:  none;
+  } 
+.other-message a:hover   {
+  /* Applies to links under the pointer in class mainNav */
+  text-decoration:  underline;
+  } 
+.other-message a:active  {
+  /* Applies to activated links in class mainNav */
+  text-decoration:  underline;
+
+  } 
