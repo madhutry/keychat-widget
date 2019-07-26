@@ -78,6 +78,7 @@ export default class ChatWindow extends React.Component {
               self.state.messages.push([messages[0],messages[1],messages[2],messages[3],messages[4],messages[5]])
               self.state.recvdMessage.push(messages[3])
               self.setState({
+                agentOnline:'online',
                 userId: JSON.parse(e.data).userId,
                 typesMessages:[],
                 sinceMesgNo:JSON.parse(e.data).lastSerialId
