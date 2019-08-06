@@ -36,7 +36,7 @@
     cursor: pointer;
   }
   .floating-chat.expand {
-    width: 250px;
+    width: 330px;
     max-height: 400px;
     height: 400px;
     border-radius: 5px;

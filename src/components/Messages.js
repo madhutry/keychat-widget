@@ -1,8 +1,12 @@
 import React from 'react';
 import './Messages.css'
+import Rating from './Rating';
+import AptConfig from './Config';
+
 export default class Messages extends React.Component {
   constructor(props) {
     super(props)    
+    this.cardMessage = this.cardMessage.bind(this)
   }
   componentDidUpdate() {
     this.scrollToBottom();
@@ -11,12 +15,15 @@ export default class Messages extends React.Component {
     if (this.refs.chatoutput != null) {
       this.refs.chatoutput.scrollTop = this.refs.chatoutput.scrollHeight;
     }  
-  } 
+  }
+  cardMessage(mesg) {
+    this.props.cardMessage(mesg)
+  }
   render(){
     return(
       <ul class="messages" ref='chatoutput'>
-            <ListMessages offlinemesg={this.props.offlinemesg} messages={this.props.messages} userId={this.props.userId}/>
-            <ListMessages messages={this.props.typesMessages} userId={this.props.userId}/>
+            <ListMessages cardMessage={this.cardMessage} offlinemesg={this.props.offlinemesg} messages={this.props.messages} userId={this.props.userId}/>
+            <ListMessages cardMessage={this.cardMessage} messages={this.props.typesMessages} userId={this.props.userId}/>
       </ul>
     )
   }
@@ -31,7 +38,7 @@ export class ListMessages extends React.Component {
     }
     this.showImageDetailsFunc = this.showImageDetailsFunc.bind(this)
     this.closeImageDetailsFunc = this.closeImageDetailsFunc.bind(this)
-
+    this.cardMessage = this.cardMessage.bind(this)
   }
   showImageDetailsFunc(url) {
     this.setState({showDetails:true,urlLoc:url})
@@ -53,6 +60,9 @@ export class ListMessages extends React.Component {
     var strTime = hours + ':' + minutes + ' ' + ampm;
     return date.getDate() +'/'+date.getMonth()  + " " + strTime;
   }
+  cardMessage(mesg) {
+    this.props.cardMessage(mesg)
+  }
   render() {
     var self=this
     const list = this.props.messages ? this.props.messages.map((messages,indx) => (
@@ -62,9 +72,19 @@ export class ListMessages extends React.Component {
         {messages[4]=='m.image' && 
           <img src={messages[5]} className="responsiveChatImg" onClick={() => this.showImageDetailsFunc(messages[5])} />
         }
-        {messages[4]=='m.text' && 
+        {messages[4]=='m.text' && !messages[0].startsWith("#") && 
         <div className="message other-message float-right">
           {messages[0]}
+        </div>
+        }
+        {messages[4]=='m.text' && messages[0].startsWith("#rating") && 
+        <div className="message other-message float-right">
+          <Rating cardMessage={this.cardMessage}  mesgId={messages[3]} resp={messages[6]}/>
+        </div>
+        }
+        {messages[4]=='m.text' && messages[0].startsWith("#aptconfig") && 
+        <div className="message other-message float-right">
+          <AptConfig cardMessage={this.cardMessage} mesgId={messages[3]} resp={messages[6]}/>
         </div>
         }
         {messages[4]=='m.file' && 

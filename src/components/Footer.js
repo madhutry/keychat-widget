@@ -21,7 +21,7 @@ export default class Footer extends React.Component {
     return(
       <div className="footer">
         <textarea name="message" value={this.state.message} 
-          onChange={this.handleInputChange} placeholder="Type your message" rows="1">
+          onChange={this.handleInputChange} placeholder="Type your message" rows="1" cols="50">
         </textarea>
         <button id="sendMessage" onClick={this.sendMessage} >Send</button>
       </div>

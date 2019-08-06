@@ -11,6 +11,7 @@ export default class ChatWindow extends React.Component {
     this.sendMessage = this.sendMessage.bind(this)  
     this.checkAgentOnline = this.checkAgentOnline.bind(this)
     this.pingMessage = this.pingMessage.bind(this)  
+    this.cardMessage = this.cardMessage.bind(this)  
 
     const avatarUrl = JSON.parse(localStorage.getItem('registrationInfo')).avatarUrl
     const welcomeMsg = JSON.parse(localStorage.getItem('registrationInfo')).WelcomeMessage
@@ -74,8 +75,12 @@ export default class ChatWindow extends React.Component {
         if(JSON.parse(e.data).messages){
           JSON.parse(e.data).messages.map((messages,indx)=>{
             if(self.state.recvdMessage.length==0 || !self.state.recvdMessage.includes(messages[3])){
-              
-              self.state.messages.push([messages[0],messages[1],messages[2],messages[3],messages[4],messages[5]])
+              if(JSON.parse(e.data).cardresp[messages[3]]){
+                self.state.messages.push([messages[0],messages[1],messages[2],messages[3],messages[4],messages[5],JSON.parse(JSON.parse(e.data).cardresp[messages[3]])])
+              }
+              else{
+                self.state.messages.push([messages[0],messages[1],messages[2],messages[3],messages[4],messages[5]]);
+              }
               self.state.recvdMessage.push(messages[3])
               self.setState({
                 agentOnline:'online',
@@ -96,6 +101,14 @@ export default class ChatWindow extends React.Component {
       setInterval(self.checkAgentOnline,20000)
     });
     
+  }
+  cardMessage(mesg) {
+    const token = JSON.parse(localStorage.getItem('registrationInfo')).token
+    var uuid = this.simpleUniqueId('mesg')
+    //this.state.typesMessages.push([mesg,'now',this.state.userId,uuid])
+    // this.setState({typesMessages:this.state.typesMessages})
+    var msg = JSON.stringify({'mesgType':'cardmesg','message':JSON.stringify(mesg),'token':token,'uuid':uuid})
+    this.ws.send(msg)
   }
   sendMessage(mesg) {
     const token = JSON.parse(localStorage.getItem('registrationInfo')).token
@@ -157,7 +170,10 @@ export default class ChatWindow extends React.Component {
           }
           <button onClick={this.hideChatWindow} ><i className="fa fa-times"></i></button>
         </div>
-        <Messages offlinemesg={this.state.agentOnline==='offline'} messages={this.state.messages} typesMessages={this.state.typesMessages} userId={this.state.userId}/>
+        <Messages offlinemesg={this.state.agentOnline==='offline'} 
+          messages={this.state.messages} typesMessages={this.state.typesMessages} 
+          cardMessage={this.cardMessage}
+          userId={this.state.userId}/>
         <Footer sendMessage={this.sendMessage}/>
       </div>
     )
