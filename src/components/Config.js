@@ -3,7 +3,6 @@ import React from 'react';
 export default class AptConfig extends React.Component {
   constructor(props) {
     super(props)
-    debugger
     this.state = {
       rooms: 1,
       deal: 'sell',
@@ -29,6 +28,9 @@ export default class AptConfig extends React.Component {
   cardMessage(event) {
     event.preventDefault();
     this.props.cardMessage(this.state)
+    this.setState({
+      submitted:'Y'
+    })
   }
   render() {
     const result = this.state.resp ? 
@@ -44,6 +46,11 @@ export default class AptConfig extends React.Component {
       <input type="radio" checked={this.state.resp.deal=='buy'}/> Buy
       <input type="radio" checked={this.state.resp.deal=='sell'}/> Sell
       <br/>
+      <div style={{'text-align': 'center'}}>
+        <span style={{'font-size': '48px', 'color': 'green'}}>
+          <i class="fa fa-check"></i>
+        </span>
+      </div>
       </fieldset>
     </div> 
     :
@@ -60,7 +67,10 @@ export default class AptConfig extends React.Component {
       <input type="radio" name="deal" onClick={this.setDeal} value="sell"/> Sell
       <br/>
       <div style={{'text-align': 'center'}}>
-        <button id="cardMessage12" onClick={this.cardMessage} style={{'background-color': '#00ff'}}>Submit</button>
+        {!this.state.submitted && <button id="cardMessage12" onClick={this.cardMessage} style={{'background-color': '#00ff'}}>Submit</button>}
+        {this.state.submitted=='Y' && <span style={{'font-size': '48px', 'color': 'green'}}>
+          <i class="fa fa-check"></i>
+        </span>}
       </div>
     </fieldset>
     </div>
