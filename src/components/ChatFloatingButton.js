@@ -14,15 +14,24 @@ export default class ChatFloatingButton extends React.Component {
     //localStorage.removeItem('registrationInfo')
   }
   openChatWindow() {
+    window.parent.postMessage({
+      'func': 'popUp',
+      'message': 'Message text from iframe.'
+    }, "*");
     if(localStorage.getItem('registrationInfo')){
       this.setState({ showChatButton:false,showChatWindow: true,showSubmitForm:false})
     }else{
       this.setState({ showChatButton:false,showChatWindow: false,showSubmitForm:true})
     }
+    
   }
 
   hideChatWindow() {
     this.setState({ showChatButton:true,showChatWindow: false,showSubmitForm:false})
+    window.parent.postMessage({
+      'func': 'closePopup',
+      'message': 'Message text from iframe.'
+    }, "*");
   }
 
   succSubmit() {

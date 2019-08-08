@@ -40,9 +40,9 @@ export class ListMessages extends React.Component {
     this.closeImageDetailsFunc = this.closeImageDetailsFunc.bind(this)
     this.cardMessage = this.cardMessage.bind(this)
   }
-  showImageDetailsFunc(url) {
+  showImageDetailsFunc(url,altVal) {
     this.setState({showDetails:true,urlLoc:url})
-    window.parent.postMessage(JSON.stringify({showDetails:true,urlLoc:url}),"*");
+    window.parent.postMessage(JSON.stringify({showDetails:true,urlLoc:url,alt:altVal}),"*");
   }
   closeImageDetailsFunc() {
     this.setState({showDetails:false})
@@ -70,7 +70,7 @@ export class ListMessages extends React.Component {
       <li className="self">{messages[0]}</li>
       :<li className="other" style={messages[4]==='m.text'?{}:{'background-color': 'transparent'}}>
         {messages[4]=='m.image' && 
-          <img src={messages[5]} alt={messages[0]} className="responsiveChatImg" onClick={() => this.showImageDetailsFunc(messages[5])} />
+          <img src={messages[5]} alt={messages[0]} className="responsiveChatImg" onClick={() => this.showImageDetailsFunc(messages[5],messages[0])} />
         }
         {messages[4]=='m.text' && !messages[0].startsWith("#") && 
         <div className="message other-message float-right">
