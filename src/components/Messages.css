@@ -27,9 +27,14 @@
   margin: 0 0 20px 0;
   font: 12px/16px 'Noto Sans', sans-serif;
   border-radius: 10px;
-  background-color: rgba(25, 147, 147, 0.2);
   word-wrap: break-word;
   max-width: 81%;
+}
+.other  {
+  background-color: rgba(25, 147, 147, 0.2);
+}
+.self  {
+  background-color: rgba(25, 147, 147, 0.2);
 }
 .floating-chat .chat .messages li:before {
   position: absolute;
@@ -48,6 +53,25 @@
   height: 0;
   border-top: 10px solid rgba(25, 147, 147, 0.2);
 }
+
+.floating-chat .chat .messages li.otherntxt {
+  animation: show-chat-odd 0.15s 1 ease-in;
+  -moz-animation: show-chat-odd 0.15s 1 ease-in;
+  -webkit-animation: show-chat-odd 0.15s 1 ease-in;
+  float: right;
+  margin-right: 45px;
+  color: #0AD5C1;
+}
+.floating-chat .chat .messages li.otherntxt:before {
+  right: -45px;
+  background-image: url(https://mdn.mozillademos.org/files/11981/starsolid.gif);
+}
+.floating-chat .chat .messages li.otherntxt:after {
+  border-right: 10px solid transparent;
+  right: -10px;
+}
+
+
 .floating-chat .chat .messages li.other {
   animation: show-chat-odd 0.15s 1 ease-in;
   -moz-animation: show-chat-odd 0.15s 1 ease-in;

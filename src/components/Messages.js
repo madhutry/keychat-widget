@@ -2,6 +2,7 @@ import React from 'react';
 import './Messages.css'
 import Rating from './Rating';
 import AptConfig from './Config';
+import ContactCard from './ContactCard';
 
 export default class Messages extends React.Component {
   constructor(props) {
@@ -68,7 +69,7 @@ export class ListMessages extends React.Component {
     const list = this.props.messages ? this.props.messages.map((messages,indx) => (
       this.props.userId===messages[2] ?
       <li className="self">{messages[0]}</li>
-      :<li className="other" style={messages[4]==='m.text'?{}:{'background-color': 'transparent'}}>
+      :<li className={(messages[4]=='m.text' && !messages[0].startsWith("#") ? 'other' : 'otherntxt')} style={messages[4]==='m.text'?{}:{'background-color': 'transparent'}}>
         {messages[4]=='m.image' && 
           <img src={messages[5]} alt={messages[0]} className="responsiveChatImg" onClick={() => this.showImageDetailsFunc(messages[5],messages[0])} />
         }
@@ -80,6 +81,11 @@ export class ListMessages extends React.Component {
         {messages[4]=='m.text' && messages[0].startsWith("#rating") && 
         <div className="message other-message float-right">
           <Rating cardMessage={this.cardMessage}  mesgId={messages[3]} resp={messages[6]}/>
+        </div>
+        }
+        {messages[4]=='m.text' && messages[0].startsWith("#contact") && 
+        <div className="message other-message float-right">
+          <ContactCard />
         </div>
         }
         {messages[4]=='m.text' && messages[0].startsWith("#aptconfig") && 

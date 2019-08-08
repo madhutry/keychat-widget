@@ -1,0 +1,61 @@
+
+
+
+.card{
+	width: 200px; /* ⬅ Size - Small (width: 200px), Medium (width: 225px), Large (width: 250px) */
+	overflow: hidden;
+	background-color: #FFFFFF;
+   
+	border-radius: 15px;
+	box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+	text-align: center;
+	-webkit-transition: .1s ease-in-out;
+	transition: .1s ease-in-out;
+}
+
+	.card:first-of-type{
+		margin-right: 25px;
+	}
+
+	.card:hover{
+		margin-top: -10px;
+		box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+	}
+
+.banner{
+	height: 100px;
+	width: 100%;
+	background-color: #FAFAFA;
+	background-size: cover;
+	background-position: center;
+}
+
+.card:first-of-type .banner{
+  background-image: url("https://pbs.twimg.com/profile_banners/1026096500902903809/1556969620/1500x500");
+}
+
+.avatar{
+	height: 100px;
+	width: 100px;
+	margin: auto;
+	background-size: cover;
+	background-position: center;
+	background-color: #F1F1F1;
+	border-radius: 100%;
+}
+
+.card:nth-child(1) .avatar{
+  background-image: url("https://upload.wikimedia.org/wikipedia/en/7/7d/Lenna_%28test_image%29.png");
+}
+
+h3, a, i{
+	font-family: 'Roboto', sans-serif;
+	font-weight: lighter;
+	-webkit-transition: .1s ease-in-out;
+	transition: .1s ease-in-out;
+}
+
+h3,h2{
+  font-size: 18px;
+  color: #212121;
+}
