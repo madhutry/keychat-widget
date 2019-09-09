@@ -8,7 +8,6 @@ export default class SubmitForm extends React.Component {
     this.openChat = this.openChat.bind(this)
     this.handleInputChange = this.handleInputChange.bind(this)
     this.hideSubmitForm = this.hideSubmitForm.bind(this)
-
     this.state = {
       fullname: '',
       mobileno: '',
@@ -20,7 +19,8 @@ export default class SubmitForm extends React.Component {
     axios.post('/chat/token',{})
     .then(function (response) {
       self.setState({
-        token:response.data.token
+        token:response.data.token,
+        lic:self.props.lic
       })
     })
     .catch(function (error) {
@@ -33,9 +33,9 @@ export default class SubmitForm extends React.Component {
   openChat() {
     console.log('opemnChat')
     console.log(this.state.fullname)
-    console.log(this.state.mobileno)
+    console.log(this.state.lic)
     this.setState({submitting:true})
-    const req = {'token':this.state.token,'fullname':this.state.fullname,'mobileno':this.state.mobileno,'extrainfo':{something:'hi'}}
+    const req = {'token':this.state.token,'lic':this.state.lic,'fullname':this.state.fullname,'mobileno':this.state.mobileno,'extrainfo':{something:'hi'}}
     var self=this
 		axios.post('/chat/submitchat',req)
     .then(function (response) {
@@ -44,6 +44,8 @@ export default class SubmitForm extends React.Component {
     })
     .catch(function (error) {
       console.log(error);
+      self.setState({error:true})
+
     });
     // var self=this
     // setTimeout(function(){
@@ -89,7 +91,9 @@ export default class SubmitForm extends React.Component {
               value={this.state.mobileno}
               onChange={this.handleInputChange} ></input>
               {!this.state.submitting && <button onClick={this.openChat}>Start Chat</button>}
-              {this.state.submitting && <button >Submitting...Please Wait</button>}
+              {this.state.submitting  && !this.state.error && <button >Submitting...Please Wait</button>}
+              {this.state.submitting && this.state.error && <button >Error...Please try Again</button>}
+
             </div>
         </div>
       </div>

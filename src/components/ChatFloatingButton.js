@@ -42,11 +42,13 @@ export default class ChatFloatingButton extends React.Component {
     }
   }
   render() {
+    const searchParams = new URLSearchParams(window.location.search);
+    const lic = searchParams.get('lic') || '';
     return (
       <div className={!this.state.showChatButton?'floating-chat enter expand':'floating-chat enter'}>
-        {this.state.showChatButton && <button onClick={this.openChatWindow} ><i className="fa fa-comments"></i></button>}
-        {this.state.showSubmitForm && <SubmitForm succSubmit={this.succSubmit} hideSubmitForm={this.hideChatWindow}/>}
-        {this.state.showChatWindow && <ChatWindow hideChatWindow={this.hideChatWindow}/>}
+        {this.state.showChatButton && <button onClick={this.openChatWindow} ><i style={{'font-size':'32px'}} className="fa fa-comments"></i></button>}
+        {this.state.showSubmitForm && <SubmitForm lic={lic} succSubmit={this.succSubmit} hideSubmitForm={this.hideChatWindow}/>}
+        {this.state.showChatWindow && <ChatWindow lic={lic} hideChatWindow={this.hideChatWindow}/>}
       </div>
     );
   }
